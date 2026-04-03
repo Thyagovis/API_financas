@@ -1,0 +1,72 @@
+from schemas.user import UsuarioIn
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy import select
+from models.user import Usuario
+from passlib.context import CryptContext
+import hashlib
+
+
+
+pwd_context = CryptContext(
+    schemes=["argon2"],
+    deprecated="auto"
+)
+
+def hash_password(password: str) -> str:
+
+    pre_hash = hashlib.sha256(password.encode()).digest()
+    return pwd_context.hash(pre_hash)
+
+
+class Usuarios:
+
+    async def adicionar_usuario(usuario : UsuarioIn, db : AsyncSession):
+
+        user = Usuario(
+            nome = usuario.nome,
+            email = usuario.email,
+            password = hash_password(usuario.password)
+        )
+
+        try:
+
+            db.add(user)
+            await db.commit()
+            await db.refresh(user)
+
+            return user
+        
+        except IntegrityError:
+
+            await db.rollback()
+            raise ValueError("Email já cadastrado!")
+        
+    
+
+    async def ler_usuario_id(id : int, db : AsyncSession):
+
+        result = await db.execute(
+            select(Usuario).where(Usuario.id == id)
+        )
+
+        return result.scalar_one_or_none()
+    
+
+
+    async def delete_user_by_id(id : int, db : AsyncSession):
+
+        user = await Usuarios.ler_usuario_id(id, db)
+
+        if not user:
+
+            return "USUARIO_NAO_ENCONTRADO"
+        
+        result = await db.delete(user)
+
+        await db.commit()
+
+        return result
+    
+        
+
