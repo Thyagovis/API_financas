@@ -12,6 +12,9 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_async_engine(
     DATABASE_URL,
     echo=True,  
+        connect_args={
+        "statement_cache_size": 0
+    }
 )
 
 
@@ -22,11 +25,11 @@ AsyncSessionLocal = sessionmaker(
 )
 
 
-@event.listens_for(engine.sync_engine, "connect")
-def enable_sqlite_fk(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
+# @event.listens_for(engine.sync_engine, "connect")
+# def enable_sqlite_fk(dbapi_connection, connection_record):
+#     cursor = dbapi_connection.cursor()
+#     cursor.execute("foreign_keys=ON")
+#     cursor.close()
 
 
 Base = declarative_base()
