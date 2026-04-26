@@ -5,6 +5,7 @@ anyio==4.13.0
 beautifulsoup4==4.14.3
 click==8.3.3
 dnspython==2.8.0
+dotenv==0.9.9
 email-validator==2.3.0
 fastapi==0.136.1
 greenlet==3.4.0
@@ -15,6 +16,7 @@ ofxparse==0.21
 passlib==1.7.4
 pydantic==2.13.3
 pydantic_core==2.46.3
+python-dotenv==1.2.2
 python-multipart==0.0.26
 six==1.17.0
 soupsieve==2.8.3
