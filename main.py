@@ -8,6 +8,23 @@ from models.user import Usuario
 from models.extrato import Extrato
 from models.transacao import Transacoes
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = [
+    "http://localhost:3000",  # React/Vite
+    "http://127.0.0.1:3000",
+    # adicione aqui seu domínio depois (produção)
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,        # quem pode acessar
+    allow_credentials=True,       # cookies / auth
+    allow_methods=["*"],          # GET, POST, PUT...
+    allow_headers=["*"],          # headers liberados
+)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
