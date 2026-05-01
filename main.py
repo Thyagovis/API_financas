@@ -17,13 +17,6 @@ origins = [
     # adicione aqui seu domínio depois (produção)
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,        # quem pode acessar
-    allow_credentials=True,       # cookies / auth
-    allow_methods=["*"],          # GET, POST, PUT...
-    allow_headers=["*"],          # headers liberados
-)
 
 
 @asynccontextmanager
@@ -41,3 +34,12 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(user.router)
 app.include_router(extrato.router)
 app.include_router(transacao.router)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,        # quem pode acessar
+    allow_credentials=True,       # cookies / auth
+    allow_methods=["*"],          # GET, POST, PUT...
+    allow_headers=["*"],          # headers liberados
+)
