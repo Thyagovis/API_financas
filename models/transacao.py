@@ -9,7 +9,7 @@ class Transacoes(Base):
 
     id : Mapped[int] = mapped_column(primary_key= True, autoincrement= True, index= True)
     extrato_id : Mapped[int] = mapped_column(ForeignKey("Extrato.id", ondelete= "CASCADE"))
-    transaction_id : Mapped[int] = mapped_column(nullable= False, unique= True)
+    transaction_id : Mapped[str] = mapped_column(nullable= False, unique= True)
     valor : Mapped[float] = mapped_column(Float, nullable= False)
     desc : Mapped[str] = mapped_column(String)
     tipo : Mapped[str] = mapped_column(String)

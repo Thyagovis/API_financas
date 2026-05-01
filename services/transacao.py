@@ -37,7 +37,7 @@ class Transacao():
 
             transacao_query = Transacoes(
                 extrato_id = extrato_id,
-                transaction_id = transacao.id,
+                transaction_id = str(transacao.id),
                 valor = transacao.amount,
                 desc =  (
                     getattr(transacao, "name", None)
