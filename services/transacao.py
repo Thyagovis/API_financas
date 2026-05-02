@@ -117,18 +117,24 @@ class Transacao():
 
             return "USUARIO_SEM_EXTRATOS"
 
+        mes = func.date_trunc('month', Transacoes.date).label("mes")
+
         for id in extratos_id:
+
 
             meses = await db.execute(
                 
-                select(func.strftime("%m/%Y", Transacoes.date))
-                .distinct()
-                .where(Transacoes.extrato_id == id, Transacoes.tipo == "payment")
-                .order_by(Transacoes.date)
+                select(func.to_char(mes, 'MM/YYYY').label("mes"))
+                .where(
+                    Transacoes.extrato_id == id, 
+                    Transacoes.tipo == "payment"
+                )
+                .group_by(mes)
+                .order_by(mes)
             )
 
             valores = await db.execute(
-                select(func.strftime("%m/%Y", Transacoes.date).label('mes'), Transacoes.valor)
+                select(func.to_char(Transacoes.date, 'MM/YYYY').label('mes'), Transacoes.valor)
                 .where(Transacoes.extrato_id == id, Transacoes.tipo == "payment")
             )
 

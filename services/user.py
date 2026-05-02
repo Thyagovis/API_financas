@@ -50,7 +50,13 @@ class Usuarios:
             select(Usuario).where(Usuario.id == id)
         )
 
-        return result.scalar_one_or_none()
+        result = result.scalar_one_or_none()
+        
+        if result == None:
+
+            return 'USUARIO_NAO_ENCONTRADO'
+
+        return result
     
 
 
@@ -58,15 +64,14 @@ class Usuarios:
 
         user = await Usuarios.ler_usuario_id(id, db)
 
-        if not user:
+        if user == "USUARIO_NAO_ENCONTRADO":
 
-            return "USUARIO_NAO_ENCONTRADO"
+            return user
         
         result = await db.delete(user)
 
         await db.commit()
-
-        return result
+        return "USUARIO_DELETADO"
     
         
 

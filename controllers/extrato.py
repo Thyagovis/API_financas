@@ -42,6 +42,8 @@ async def read_all_extratos_user(id : int, db : AsyncSession = Depends(get_db)):
             status_code= 404,
             detail= "Usuario nao possui extratos registrados"
         )
+    
+    return result
 
 
 
