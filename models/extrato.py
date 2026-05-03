@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, String
-from database import Base
+from core.database import Base
 from datetime import datetime,UTC
 from sqlalchemy import DateTime
 

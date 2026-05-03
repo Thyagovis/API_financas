@@ -12,7 +12,7 @@ from ofxparse import OfxParser
 from models.transacao import Transacoes
 from models.extrato import Extrato
 
-class Transacao():
+class Transacao:
 
 
     #func auxiliar para Extrato.adicionar_extrato
@@ -116,6 +116,8 @@ class Transacao():
         if extratos_id == []:
 
             return "USUARIO_SEM_EXTRATOS"
+        
+        
 
         mes = func.date_trunc('month', Transacoes.date).label("mes")
 

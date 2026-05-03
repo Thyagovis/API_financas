@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Float, ForeignKey, Date
-from database import Base
+from core.database import Base
 from datetime import date
 
 class Transacoes(Base):

@@ -1,22 +1,13 @@
 from schemas.user import UsuarioIn
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import select
+
 from models.user import Usuario
-from passlib.context import CryptContext
-import hashlib
+from core.security import hash_password
 
 
-
-pwd_context = CryptContext(
-    schemes=["argon2"],
-    deprecated="auto"
-)
-
-def hash_password(password: str) -> str:
-
-    pre_hash = hashlib.sha256(password.encode()).digest()
-    return pwd_context.hash(pre_hash)
 
 
 class Usuarios:

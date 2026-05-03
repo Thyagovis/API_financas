@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from database import engine, Base
-from controllers import user, extrato, transacao
+from core.database import engine, Base
+from controllers import user, extrato, transacao, auth
 
 # Importando os models
 from models.user import Usuario
@@ -34,6 +34,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(user.router)
 app.include_router(extrato.router)
 app.include_router(transacao.router)
+app.include_router(auth.router)
 
 
 app.add_middleware(
