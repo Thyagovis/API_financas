@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.database import get_db
 from services.auth import Auth
 from core.security import create_acess_token
+from fastapi.responses import JSONResponse
 
 
 router = APIRouter(prefix='/auth')
@@ -29,16 +30,10 @@ async def login(user: AuthIn, response : Response, db : AsyncSession = Depends(g
     
     token = create_acess_token(result.id)
 
-    print(result.id)
-    
-    response.set_cookie(
-        key= 'access_token',
-        value = token,
-        httponly= True,
-        secure= True,
-        samesite= 'none',
-        path= '/',
-        domain=None
+    response = JSONResponse(content={'message': 'Login realizado com sucesso'})
+    response.headers.append(
+        "set-cookie",
+        f"access_token={token}; Path=/; HttpOnly; Secure; SameSite=None"
     )
     
-    return {'message' : 'Login realizado com sucesso'}
+    return response
