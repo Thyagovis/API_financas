@@ -35,8 +35,8 @@ async def login(user: AuthIn, response : Response, db : AsyncSession = Depends(g
         key= 'access_token',
         value = token,
         httponly= True,
-        secure= False,
-        samesite= 'lax',
+        secure= True,
+        samesite= 'none',
         path= '/',
         domain=None
     )
