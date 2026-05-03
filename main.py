@@ -14,7 +14,6 @@ from fastapi.middleware.cors import CORSMiddleware
 origins = [
     "http://localhost:3000",  # React/Vite
     "http://127.0.0.1:3000",
-    # adicione aqui seu domínio depois (produção)
 ]
 
 
@@ -30,11 +29,9 @@ async def lifespan(app: FastAPI):
     await engine.dispose()
 
 
+
 app = FastAPI(lifespan=lifespan)
-app.include_router(user.router)
-app.include_router(extrato.router)
-app.include_router(transacao.router)
-app.include_router(auth.router)
+
 
 
 app.add_middleware(
@@ -44,3 +41,10 @@ app.add_middleware(
     allow_methods=["*"],          # GET, POST, PUT...
     allow_headers=["*"],          # headers liberados
 )
+
+
+
+app.include_router(user.router)
+app.include_router(extrato.router)
+app.include_router(transacao.router)
+app.include_router(auth.router)
