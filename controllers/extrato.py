@@ -35,7 +35,7 @@ async def create_extrato(banco : str = Form(...),  file : UploadFile = File(...)
 @router.get("/user/me")
 async def read_all_extratos_user(user_id : int = Depends(get_current_user), db : AsyncSession = Depends(get_db)):
 
-    result = await Extratos.ler_extratos_user(id, db)
+    result = await Extratos.ler_extratos_user(user_id, db)
 
     if result == "USUARIO_SEM_EXTRATOS":
 
@@ -51,7 +51,7 @@ async def read_all_extratos_user(user_id : int = Depends(get_current_user), db :
 @router.delete("/delete/me")
 async def delete_extrato(user_id : int = Depends(get_current_user), db : AsyncSession = Depends(get_db)):
 
-    result = await Extratos.remover_extrato(id, db)
+    result = await Extratos.remover_extrato(user_id, db)
 
     if result == "EXTRATO_NAO_ENCONTRADO":
 
